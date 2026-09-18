@@ -1,19 +1,24 @@
+import type { Movie } from "../types";
+
 interface MovieModalProps {
-  movie: any;
+  movie: Movie;
   onClose: () => void;
 }
 
+const FALLBACK_POSTER = "https://placehold.co/500x750?text=No+Poster";
+
 function MovieModal({ movie, onClose }: MovieModalProps) {
+  const imageUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    : FALLBACK_POSTER;
+
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
-        
+
         <div className="modal-header">
-          <img 
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
-            alt={movie.title} 
-          />
+          <img src={imageUrl} alt={movie.title} />
           <div className="modal-info">
             <h2>{movie.title}</h2>
             <p className="modal-date">{movie.release_date?.split("-")[0]}</p>

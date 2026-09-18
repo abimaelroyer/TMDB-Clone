@@ -1,18 +1,23 @@
-interface MovieProps {
-  movie: any;
-  onClick: () => void; // <--- New Prop
+import type { Movie } from "../types";
+
+interface MovieCardProps {
+  movie: Movie;
+  onClick: () => void;
 }
 
-function MovieCard({ movie, onClick }: MovieProps) {
-  const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+const FALLBACK_POSTER = "https://placehold.co/500x750?text=No+Poster";
+
+function MovieCard({ movie, onClick }: MovieCardProps) {
+  const imageUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    : FALLBACK_POSTER;
 
   return (
-    // Add onClick here so the whole card is clickable
-    <div className="movie-card" onClick={onClick}> 
+    <div className="movie-card" onClick={onClick}>
       <img src={imageUrl} alt={movie.title} />
       <div className="movie-info">
         <h3>{movie.title}</h3>
-        <p>{movie.release_date?.split("-")[0]}</p>
+        <p>{movie.release_date?.split("-")[0] || "Unknown"}</p>
       </div>
     </div>
   );

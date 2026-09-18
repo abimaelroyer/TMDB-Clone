@@ -7,10 +7,10 @@
 
 .movie-card {
   background-color: #1e1e1e; /* Dark card background */
-  border-radius: 12px;       /* Rounded corners like the image */
-  overflow: hidden;          /* Ensures image doesn't poke out of rounded corners */
+  border-radius: 12px; /* Rounded corners like the image */
+  overflow: hidden; /* Ensures image doesn't poke out of rounded corners */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle drop shadow */
-  transition: transform 0.2s ease-in-out;   /* Smooth hover animation */
+  transition: transform 0.2s ease-in-out; /* Smooth hover animation */
   cursor: pointer;
 }
 
@@ -22,8 +22,8 @@
 
 /* 4. The Image (Fitting) */
 .movie-card img {
-  width: 100%;    /* Forces image to fit the width of the card */
-  height: auto;   /* Maintains aspect ratio */
+  width: 100%; /* Forces image to fit the width of the card */
+  height: auto; /* Maintains aspect ratio */
   display: block; /* Removes tiny gap at bottom of images */
 }
 
@@ -35,9 +35,9 @@
 .movie-info h3 {
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  white-space: nowrap;      /* Don't wrap text */
-  overflow: hidden;         /* Hide overflow */
-  text-overflow: ellipsis;  /* Add "..." if title is too long */
+  white-space: nowrap; /* Don't wrap text */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add "..." if title is too long */
 }
 
 .movie-info p {
@@ -81,14 +81,6 @@
 
 .app-header {
   display: flex;
-  align-items: left;
-  justify-content: left; 
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.app-header {
-  display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 1rem;
@@ -117,7 +109,7 @@
   border-radius: 12px;
   position: relative;
   padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -158,8 +150,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Mobile Tweak */

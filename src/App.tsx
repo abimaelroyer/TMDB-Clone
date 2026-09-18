@@ -2,60 +2,68 @@ import { useState, useEffect } from "react";
 import { fetchTrendingMovies, searchMovies } from "./services/tmdb";
 import MovieCard from "./components/MovieCard";
 import SearchBar from "./components/SearchBar";
-import MovieModal from "./components/MovieModal"; // <--- 1. Import Modal
+import MovieModal from "./components/MovieModal";
+import type { Movie } from "./types";
 import "./App.css";
 
 function App() {
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [selectedMovie, setSelectedMovie] = useState(null); // <--- 2. New State
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // already true on mount
+  const [error, setError] = useState<string | null>(null);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const loadTrending = async () => {
     setIsLoading(true);
+    setError(null);
     const data = await fetchTrendingMovies();
     setMovies(data);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    loadTrending();
+    fetchTrendingMovies().then((data) => {
+      setMovies(data);
+      setIsLoading(false);
+    });
   }, []);
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
+    setError(null);
     const results = await searchMovies(query);
+    if (results.length === 0) {
+      setError(`No results found for "${query}".`);
+    }
     setMovies(results);
     setIsLoading(false);
   };
 
   return (
-    <div className="appContainer">
+    <div className="app-container">
       <header className="app-header" onClick={loadTrending}>
         <h1>QueryCast</h1>
       </header>
-      
+
       <SearchBar onSearch={handleSearch} />
 
       {isLoading ? (
         <p>Loading movies...</p>
+      ) : error ? (
+        <p>{error}</p>
       ) : (
         <div className="movie-grid">
-          {movies.map((movie: any) => (
-            <MovieCard 
-              key={movie.id} 
-              movie={movie} 
-              onClick={() => setSelectedMovie(movie)} // <--- 3. Set the movie on click
-            /> 
+          {movies.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              onClick={() => setSelectedMovie(movie)}
+            />
           ))}
         </div>
       )}
 
-      {/* 4. Show Modal ONLY if a movie is selected */}
       {selectedMovie && (
-        <MovieModal 
-          movie={selectedMovie} 
-          onClose={() => setSelectedMovie(null)} 
-        />
+        <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
       )}
     </div>
   );
